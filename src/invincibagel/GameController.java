@@ -35,6 +35,10 @@ public class GameController {
         final static int B_BUTTON = 2;
         final static int X_BUTTON = 3;
         final static int Y_BUTTON = 0;
+        
+        //final static int 
+                //x is 0, o is 1 okay so can we try again t I want to update this online
+                        
 
         final static int SELECT_BUTTON = 8;
         final static int START_BUTTON = 9;
@@ -58,17 +62,21 @@ public class GameController {
         final static int ANALOG_TRUE_DOWN = 100;
 
     }
+    
 
     public GameController() {
         Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
         for (int i = 0; i < controllers.length; i++) {
             Controller controller = controllers[i];
-            if (controller.getType() == Controller.Type.GAMEPAD) {
+            System.out.println(controller.getName());
+            if (controller.getType() == Controller.Type.GAMEPAD || controller.getName().contains("PLAYSTATION")) {
+                System.out.println("we have a ps3 controller, right bradley? Yes");
                 defaultController = controller;
                 System.out.println(defaultController.getType());
                 controllerInitialized = true;
 
             }
+            
 
         }
         if (defaultController == null) {
@@ -95,16 +103,22 @@ public class GameController {
         Component[] components = defaultController.getComponents();
         for (int i = 0; i < components.length; i++) {
             Component component = components[i];
+            //System.out.println(component.getName() + "this will tell us what inputs the controller has");
+            //I was pushing x and o and they showed up, but i did not see the rest of the buttons oh
             Component.Identifier componentIdentifier = component.getIdentifier();
-            if (componentIdentifier.getName().matches("^[0-9]*$")) {
+            if (componentIdentifier.getName().matches("^[0-18]*$")    ) {
 
+                //System.out.println("we got a button" + component.getName());
                 boolean isItPressed = true;
                 if (component.getPollData() == 0.0f) {
                     isItPressed = false;
+                    
                 }
                 if (isItPressed) {
                     String name = componentIdentifier.getName();
-                    buttonPressed = Integer.parseInt(name);
+                    System.out.println("it's working! " + component.getName());
+                    //we'll try again
+                    //buttonPressed = Integer.parseInt(name);
 //int number = Integer.parseInt(name);
 
                         //System.out.println(componentIdentifier.getName());
